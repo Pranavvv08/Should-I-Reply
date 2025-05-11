@@ -1,6 +1,10 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-OPENROUTER_API_KEY = "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"
+load_dotenv()
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 def analyze_email(subject, body):
     prompt = f"""
