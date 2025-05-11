@@ -59,7 +59,7 @@ def analyze_email(subject, body):
         content = response.json()["choices"][0]["message"]["content"]
         return parse_ai_response(content)
     except Exception as e:
-        return {"urgency": "Error", "reply": f"AI analysis failed: {str(e)}"}
+        return {"summary": "No summary","urgency": "Error", "reply": f"AI analysis failed: {str(e)}"}
 
 def parse_ai_response(ai_text):
     lines = ai_text.strip().splitlines()
