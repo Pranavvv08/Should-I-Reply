@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Login - Analyze Emails</title>
+    <link rel="stylesheet" href="{% static 'analyze/style.css' %}">
+</head>
+
+<body>
+    <main class="container">
+        <h1 class="form-title">Enter Email Credentials</h1>
+        <form method="post" action=""> {# Use action="" for submitting to the same URL #}
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="errorlist">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                <div class="errorlist">
+                    {{ form.email.errors }}
+                </div>
+                {% endif %}
+                {% if form.email.help_text %}
+                <small class="form-text text-muted">{{ form.email.help_text|safe }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                <div class="errorlist">
+                    {{ form.password.errors }}
+                </div>
+                {% endif %}
+                {% if form.password.help_text %}
+                <small class="form-text text-muted">{{ form.password.help_text|safe }}</small>
+                {% endif %}
+            </div>
+
+            <button type="submit">Analyze Emails</button>
+        </form>
+    </main>
+</body>
+
+</html>

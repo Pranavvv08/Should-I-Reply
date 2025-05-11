@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Analysis Results</title>
+    <link rel="stylesheet" href="{% static 'analyze/style.css' %}">
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    section {
+        padding: 60px 20px;
+        text-align: left;
+        width: 100%;
+        max-width: 800px;
+        border-bottom: 2px solid #ccc;
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        margin: 10px 0;
+    }
+
+    .email-result {
+        margin-bottom: 60px;
+    }
+
+    .recommendation {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1 style="margin-top: 30px; font-size: 2.5rem;">Email Analysis Results</h1>
+
+    {% if error %}
+    <section>
+        <h2>Error</h2>
+        <p>{{ error }}</p>
+    </section>
+    {% else %}
+    {% for result in results %}
+    <section class="email-result">
+        <h2>{{ forloop.counter }}. {{ result.subject }}</h2>
+
+        <p><strong>Email Summary:</strong><br>{{ result.summary }}</p>
+
+        <p><strong>Urgency:</strong> {{ result.urgency }}</p>
+
+        <p><strong>AI Suggested Reply:</strong><br>{{ result.reply }}</p>
+
+        <p class="recommendation" style="color: {% if result.should_reply %}green;{% else %}red;{% endif %}">
+            {% if result.should_reply %}
+            ✅ YES, you should reply to this email.
+            {% else %}
+            ❌ NO, you should not reply to this email.
+            {% endif %}
+        </p>
+
+        <p><strong>Reason:</strong> {{ result.recommendation_reason }}</p>
+    </section>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>
